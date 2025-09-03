@@ -43,7 +43,15 @@ const handleClickSearchButton = (event) => {
   event.preventDefault();
   const inputValue = input.value.toLowerCase();
   console.log("Haz buscado:", inputValue);
-}
+  const searchResults = products.filter (p => 
+    p.title.toLowerCase().includes(inputValue) ||
+    p.description.toLowerCase().includes(inputValue)
+  );
+  productsElement.innerHTML = "";
+  for (const p of searchResults) {
+    productsElement.innerHTML += renderProducts(p);
+  }
+};
 searchButton.addEventListener("click", handleClickSearchButton);
 
 //    "id": 1,
