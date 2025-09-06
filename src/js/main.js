@@ -29,8 +29,7 @@ const renderProducts = product => {
     htmlCode += `<div class="card">`;
     htmlCode += `<img src="${product.image}" class="card_img" alt="Producto: ${product.title}">`;
     htmlCode += `<h3 class="card__title">${product.title}</h3>`;
-    htmlCode += `<p class="card__description">${product.description}</p>`;
-    htmlCode += `<p class="card__price">${product.price}</p>`;
+    htmlCode += `<p class="card__price">${product.price} $</p>`;
     htmlCode += `<button class="js-add-products" data-id="${product.id}">Comprar</button>`;
     htmlCode += `</div>`;
     return htmlCode;
@@ -57,9 +56,7 @@ const handleClickSearchButton = (event) => {
   event.preventDefault();
   const inputValue = input.value.toLowerCase();
   const searchResults = products.filter (p => 
-    p.title.toLowerCase().includes(inputValue) ||
-    p.description.toLowerCase().includes(inputValue)
-  );
+    p.title.toLowerCase().includes(inputValue));
   productsElement.innerHTML = "";
   for (const p of searchResults) {
     productsElement.innerHTML += renderProducts(p);
@@ -79,11 +76,10 @@ const listenAddProductsButtons = () => {
 const getShoppingBagHtmlCode = item => {
     let htmlCode = '';
     htmlCode += `<div class="card_shoppingBag" data-id="${item.id}">`;
+    htmlCode += `<button class="delete_product_shoppingBag">X</button>`;
     htmlCode += `<img src="${item.image}" class="card_img_shoppingBag" alt="Producto: ${item.title}">`;
     htmlCode += `<h3 class="card__title_shoppingBag">${item.title}</h3>`;
-    htmlCode += `<p class="card__description_shoppingBag">${item.description}</p>`;
-    htmlCode += `<p class="card__price_shoppingBag">${item.price}</p>`;
-    htmlCode += `<button class="delete_product_shoppingBag">X</button>`;
+    htmlCode += `<p class="card__price_shoppingBag">${item.price} $</p>`;
     htmlCode += `</div>`;
     return htmlCode;
 }
