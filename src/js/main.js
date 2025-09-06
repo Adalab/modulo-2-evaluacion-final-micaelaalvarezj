@@ -1,9 +1,11 @@
 'use strict';
 console.log('>> Ready? Yes, Ready :)');
 
+//Arrays que se van a llenar con producto
 let products = [];
 let cart = [];
 
+//Llamar al servidor para que traiga productos
 const getApiData = () => {
     fetch('https://fakestoreapi.com/products')
     .then((response) => response.json())
@@ -14,13 +16,14 @@ const getApiData = () => {
     })
 };
 
+//Selectores de Div productos y Div carrito
 document.querySelector(".products").classList.add("js-products");
 const productsElement = document.querySelector('.js-products');
 
 document.querySelector(".shopping_bag").classList.add("js-shopping_bag");
 const shoppingBag = document.querySelector(".js-shopping_bag");
 
-
+//Bucle para mostrar todos los productos
 const renderProducts = product => {
     let htmlCode = '';
     htmlCode += `<div class="card">`;
@@ -33,6 +36,7 @@ const renderProducts = product => {
     return htmlCode;
 };
 
+//Función para pintar productos
 const renderProductsList = () => {
     let productsCode = '';
     for (const product of products) {
@@ -44,9 +48,11 @@ const renderProductsList = () => {
 };
 getApiData();
 
+//Selector botón del buscador e input del buscador
 const searchButton = document.querySelector(".js_button-search");
 const input = document.querySelector(".js_in_search");
 
+//Función manejadora del buscador
 const handleClickSearchButton = (event) => {
   event.preventDefault();
   const inputValue = input.value.toLowerCase();
@@ -61,6 +67,7 @@ const handleClickSearchButton = (event) => {
 };
 searchButton.addEventListener("click", handleClickSearchButton);
 
+//Función manejadora del click del botón comprar
 const listenAddProductsButtons = () => {
     const productsButtons = document.querySelectorAll('.js-add-products');
     for (const productsButton of productsButtons) {
@@ -68,17 +75,20 @@ const listenAddProductsButtons = () => {
     }
 }
 
+//Bucle para mostrar los productos que se han comprado
 const getShoppingBagHtmlCode = item => {
     let htmlCode = '';
-    htmlCode += `<div class="card_shoppingBag">`;
+    htmlCode += `<div class="card_shoppingBag" data-id="${item.id}">`;
     htmlCode += `<img src="${item.image}" class="card_img_shoppingBag" alt="Producto: ${item.title}">`;
     htmlCode += `<h3 class="card__title_shoppingBag">${item.title}</h3>`;
     htmlCode += `<p class="card__description_shoppingBag">${item.description}</p>`;
     htmlCode += `<p class="card__price_shoppingBag">${item.price}</p>`;
+    htmlCode += `<button class="delete_product_shoppingBag">X</button>`;
     htmlCode += `</div>`;
     return htmlCode;
 }
 
+//Detecta el producto clicado y lo pinta
 const addProduct = (event) => {
     const clickedId = parseInt(event.target.dataset.id);
     const foundProduct = products.find((item) => item.id === clickedId);
@@ -105,6 +115,7 @@ const paintCartItems = () => {
     }
 };
 
+//Cambia la clase y texto del producto clicado
 productsElement.addEventListener("click", (event) => {
     if (event.target.classList.contains ("js-add-products")) {
 
@@ -117,6 +128,17 @@ productsElement.addEventListener("click", (event) => {
     }
   }
 });
+
+//Botón para eliminar producto desde el carrito de la compra
+shoppingBag.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete_product_shoppingBag")) {
+    const clickedCard = event.target.closest(".card_shoppingBag");
+    const clickedId = parseInt(clickedCard.dataset.id);
+    cart = cart.filter(item => item.id !== clickedId);
+    paintCartItems(); 
+    }
+});
+
 
 
 //    "id": 1,
