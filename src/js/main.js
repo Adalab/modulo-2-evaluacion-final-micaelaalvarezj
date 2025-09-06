@@ -82,16 +82,18 @@ const getShoppingBagHtmlCode = item => {
 const addProduct = (event) => {
     const clickedId = parseInt(event.target.dataset.id);
     const foundProduct = products.find((item) => item.id === clickedId);
+    console.log (foundProduct);
     const productIndex = cart.findIndex((item) => item.id === clickedId);
     if (productIndex === -1) {
     cart.push({
+        id: foundProduct.id,
         image: foundProduct.image,
         title: foundProduct.title,
         description: foundProduct.description,
         price: foundProduct.price,
     })
     } else {
-    cart.splice(productIndex, 1);
+    cart.splice(productIndex);
     }
     paintCartItems();
 }
