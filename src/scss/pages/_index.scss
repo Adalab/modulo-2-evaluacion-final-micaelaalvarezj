@@ -6,6 +6,11 @@ h1 {
   color: grey;
 }
 
+.input {
+  width: 70%
+  
+}
+
 .products_title {
   display: flex;
   justify-content: center;
@@ -24,6 +29,16 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  gap: 10px;
+}
+
+.button {
+  color: white;
+  font-size: 20px;
+  border: none;
+  padding: 13px;
+  margin: 5px;
+  background-color: #439286;
 }
 
 .header_form_container {
