@@ -92,7 +92,6 @@ const getShoppingBagHtmlCode = item => {
 const addProduct = (event) => {
     const clickedId = parseInt(event.target.dataset.id);
     const foundProduct = products.find((item) => item.id === clickedId);
-    console.log (foundProduct);
     const productIndex = cart.findIndex((item) => item.id === clickedId);
     if (productIndex === -1) {
     cart.push({
@@ -136,6 +135,18 @@ shoppingBag.addEventListener("click", (event) => {
     const clickedId = parseInt(clickedCard.dataset.id);
     cart = cart.filter(item => item.id !== clickedId);
     paintCartItems(); 
+    renderProductsList();
+    }
+});
+
+//Botón para eliminar carrito de la compra completo
+shoppingBag.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete_product_shoppingBag")) {
+    const clickedCard = event.target.closest(".card_shoppingBag");
+    const clickedId = parseInt(clickedCard.dataset.id);
+    cart = cart.filter(item => item.id !== clickedId);
+    paintCartItems(); 
+    renderProductsList();
     }
 });
 
