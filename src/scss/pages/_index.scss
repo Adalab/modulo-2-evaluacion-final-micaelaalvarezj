@@ -11,7 +11,26 @@
   background-color: red;
 }
 
-.products {
+.container {
   display: flex;
   flex-direction: row;
 }
+
+.card {
+  width: 500px;
+  gap:100px;
+}
+
+.card__description {
+  box-sizing: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.products {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+

@@ -18,18 +18,18 @@ document.querySelector(".products").classList.add("js-products");
 const productsElement = document.querySelector('.js-products');
 
 document.querySelector(".shopping_bag").classList.add("js-shopping_bag");
-const shoppingBag = document.querySelector("js-shopping_bag");
+const shoppingBag = document.querySelector(".js-shopping_bag");
 
 
 const renderProducts = product => {
     let htmlCode = '';
-    htmlCode += `<article class="card">`;
+    htmlCode += `<div class="card">`;
     htmlCode += `<img src="${product.image}" class="card_img" alt="Producto: ${product.title}">`;
     htmlCode += `<h3 class="card__title">${product.title}</h3>`;
     htmlCode += `<p class="card__description">${product.description}</p>`;
     htmlCode += `<p class="card__price">${product.price}</p>`;
     htmlCode += `<button class="js-add-products" data-id="${product.id}">Comprar</button>`;
-    htmlCode += `</article>`;
+    htmlCode += `</div>`;
     return htmlCode;
 };
 
@@ -70,37 +70,38 @@ const listenAddProductsButtons = () => {
 
 const getShoppingBagHtmlCode = item => {
     let htmlCode = '';
-    htmlCode += `<article class="card">`;
-    htmlCode += `<img src="${product.image}" class="card_img" alt="Producto: ${product.title}">`;
-    htmlCode += `<h3 class="card__title">${product.title}</h3>`;
-    htmlCode += `<p class="card__description">${product.description}</p>`;
-    htmlCode += `<p class="card__price">${product.price}</p>`;
-    htmlCode += `<button class="js-add-products" data-id="${product.id}">Comprar</button>`;
-    htmlCode += `</article>`;
+    htmlCode += `<div class="card_shoppingBag">`;
+    htmlCode += `<img src="${item.image}" class="card_img_shoppingBag" alt="Producto: ${item.title}">`;
+    htmlCode += `<h3 class="card__title_shoppingBag">${item.title}</h3>`;
+    htmlCode += `<p class="card__description_shoppingBag">${item.description}</p>`;
+    htmlCode += `<p class="card__price_shoppingBag">${item.price}</p>`;
+    htmlCode += `</div>`;
     return htmlCode;
 }
 
 const addProduct = (event) => {
-    console.log("han clicado en un producto", event.target.dataset.id);
-    const clickedId = event.target.dataset.id;
+    const clickedId = parseInt(event.target.dataset.id);
     const foundProduct = products.find((item) => item.id === clickedId);
-    console.log(foundProduct);
+    const productIndex = cart.findIndex((item) => item.id === clickedId);
+    if (productIndex === -1) {
     cart.push({
-        img: foundProduct.image,
+        image: foundProduct.image,
         title: foundProduct.title,
         description: foundProduct.description,
         price: foundProduct.price,
     })
+    } else {
+    cart.splice(productIndex, 1);
+    }
     paintCartItems();
 }
 
 const paintCartItems = () => {
-    cartElements.innerHTML = '';
+    shoppingBag.innerHTML = '';
     for (const item of cart) {
-        cartElement.innerHTML += getCartItemHtmlCode(item);
+        shoppingBag.innerHTML += getShoppingBagHtmlCode(item);
     }
-    cartElement.innerHTML += getCartTotalHtmlCode();
-}
+};
 
 productsElement.addEventListener("click", (event) => {
     if (event.target.classList.contains ("js-add-products")) {
